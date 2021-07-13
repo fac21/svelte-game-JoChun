@@ -1,10 +1,11 @@
 <script>
 	export let name;
+	import Gameboard from './Gameboard.svelte';
 </script>
 
 <main>
 	<h1>Hello {name} and welcome!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<Gameboard/>
 </main>
 
 <style>
