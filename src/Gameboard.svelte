@@ -58,29 +58,46 @@
   }
 </script>
 
-{#if winner}
-  <h3>{winner}</h3>
-  <button on:click={restartGame}>Restart Game</button>
-{:else}
-  <h3>{status}</h3>
-{/if}
+<div class="flex">
+    {#if winner}
+    <h3>{winner}</h3>
+    {:else}
+    <h3>{status}</h3>
+    {/if}
 
-<div class="gameboard">
-  {#each blocks as block, i}
-    <Block value={block} handleClick={() => handleClick(i)} />
-  {/each}
+    <div class="gameboard">
+    {#each blocks as block, i}
+        <Block value={block} handleClick={() => handleClick(i)} />
+    {/each}
+    </div>
+    {#if winner}
+        <button on:click={restartGame}>Restart Game</button>
+    {/if}
 </div>
 
 <style>
   .gameboard {
     border: solid 1px transparent;
-    height: 70vh;
-    width: 70vw;
+    height: 50vh;
+    max-width: 500px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     margin: auto;
     text-align: center;
+  }
+
+  h3 {
+      text-align: center;
+  }
+
+  button {
+      margin: 1rem auto;
+
+  }
+
+  .flex {
+      display: flex;
+      flex-direction: column;
   }
 
   @media (min-width: 640px) {
