@@ -1,20 +1,33 @@
 <script>
 	// export let name;
     import Cat from './Cat.svelte';
-    import Block from './Block.svelte';
-    export let blocks = [        
-        {height: 10, width: 50},
-        {height: 50, width: 200},
-        {height: 80, width: 100},
-]   
+    import HorizontalBlock from './HorizontalBlock.svelte';
+    import VerticalBlock from './VerticalBlock.svelte';
+
+    let moving = false;
+    let clientWidth;
+
+    // if click is false
+
+    // const gameboardWidth;
+    // const gameboardHeight;
+
+    function handleClick() {
+        console.log("clicked")
+		moving = !moving;
+	}
 </script>
 
-<div class="gameboard">
-	Action happens here
+<div class="gameboard" bind:clientWidth>
+    {console.log("clientwidth", clientWidth)}
     <Cat/>
-    {#each blocks as block}
-        <Block height={block.height} width={block.width}></Block>
-    {/each}
+    <div class="blob" on:click={() => console.log("clicked")}></div>
+    <HorizontalBlock class="blob" on:click={() => console.log("clicked")}></HorizontalBlock>
+    <!-- {#if moving == true} -->
+        <HorizontalBlock on:click={() => console.log("clicked")}/>
+
+    <HorizontalBlock/>
+    <VerticalBlock/>
 </div>
 
 <style>
@@ -24,8 +37,10 @@
 		width: 80vw;
 	}
 
-    div {
-        border: solid 1px black;
+    .blob {
+        background-color: red;
+        height: 300px;
+        width: 300px;
     }
 
 	@media (min-width: 640px) {
