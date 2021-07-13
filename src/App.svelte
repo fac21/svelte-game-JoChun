@@ -1,12 +1,15 @@
 <script>
-	export let name;
+	const title = "Chun and Jo's Tic Tac Toe";
 	import Gameboard from './Gameboard.svelte';
 </script>
 
-<main>
-	<h1>Hello {name} and welcome!</h1>
-	<Gameboard/>
-</main>
+
+<svelte:head>
+	<title>{title}</title>
+</svelte:head>
+
+<h1>{title}</h1>
+<Gameboard/>
 
 <style>
 	main {
