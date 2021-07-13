@@ -3,23 +3,30 @@
   import Cat from './Cat.svelte';
   import Fish from './Fish.svelte';
   import Block from './Block.svelte';
-  let cat = './../public/cat.svg';
+  let cat = {
+    name: 'cat',
+    image: 'cat.svg',
+  };
+  let fish = {
+    name: 'fish',
+    image: 'fish.svg',
+  };
   let blocks = [null, null, null, null, null, null, null, null, null];
 
-  let xIsNext = true;
-  $: status = 'Next Player: ' + (xIsNext ? 'cat' : 'fish');
+  let catIsNext = true;
+  $: status = 'Next Player: ' + (catIsNext ? 'cat' : 'fish');
 
   let winner = null;
 
   function handleClick(i) {
     if (!blocks[i]) {
-      blocks[i] = xIsNext ? 'cat' : 'fish';
-      xIsNext = !xIsNext;
+      blocks[i] = catIsNext ? cat.image : fish.image;
+      catIsNext = !catIsNext;
     }
     winner = calculateWinner(blocks);
   }
 
-  function calculateWinner(blocks) {
+  function calculateWinner(blocksArray) {
     const winningCombo = [
       [0, 1, 2],
       [3, 4, 5],
@@ -32,8 +39,12 @@
     ];
     for (let i = 0; i < winningCombo.length; i++) {
       const [a, b, c] = winningCombo[i];
-      if (blocks[a] && blocks[a] === blocks[b] && blocks[a] === blocks[c])
-        return `Winner: ${blocks[a]}`;
+      if (
+        blocksArray[a] &&
+        blocksArray[a] === blocksArray[b] &&
+        blocksArray[a] === blocksArray[c]
+      )
+        return `Winner: ${blocksArray[a].slice(0, -4)}`;
     }
 
     const isDraw = blocks.every((block) => block !== null);
@@ -42,7 +53,7 @@
 
   function restartGame() {
     blocks = [null, null, null, null, null, null, null, null, null];
-    xIsNext = true;
+    catIsNext = true;
     winner = null;
   }
 </script>
@@ -58,18 +69,18 @@
   {#each blocks as block, i}
     <Block value={block} handleClick={() => handleClick(i)} />
   {/each}
-  <Cat />
-  <Fish />
 </div>
 
 <style>
   .gameboard {
-    border: solid 1px black;
-    height: 80vh;
-    width: 80vw;
-    display: flex;
-    flex-wrap: wrap;
-    /* width: 300px; */
+    border: solid 1px transparent;
+    height: 70vh;
+    width: 70vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(10rem, 1fr));
+    margin: auto;
+    text-align: center;
   }
 
   @media (min-width: 640px) {
